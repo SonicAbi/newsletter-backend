@@ -1,0 +1,5 @@
+# deps
+node_modules/
+
+# pd-data
+database/pg-data
