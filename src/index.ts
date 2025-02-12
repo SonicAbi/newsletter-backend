@@ -1,20 +1,25 @@
-import { Hono } from 'hono'
-import { getClient } from './db/db'
+import { Hono } from "hono";
+import { getClient } from "./db/db";
 
+const app = new Hono();
+const client = getClient();
 
-const app = new Hono()
-const client = getClient()
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
+});
 
+app.get("/subscriber", async (c) => {
+  client.connect();
+  const allSubscriber = await client.query(`SELECT * FROM subscriber`);
+  client.end();
+  return c.json(allSubscriber.rows);
+});
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.get("/newsletter", async (c) => {
+  client.connect();
+  const allNewsletter = await client.query(`SELECT * FROM newsletter`);
+  client.end();
+  return c.json(allNewsletter.rows);
+});
 
-app.get('/subscriber', async (c) => {
-  client.connect()
-  const allSubscriber = await client.query(`SELECT * FROM subscriber`)
-  client.end()
-  return c.json(allSubscriber.rows)
-})
-
-export default app
+export default app;
