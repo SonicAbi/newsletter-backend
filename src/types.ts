@@ -6,7 +6,7 @@ export type Subscriber = {
   phone: string;
 };
 
-export type Newsletter = {
+export type NewsletterType = {
   id?: number | null;
   created_at: string;
   updated_at: string | null;

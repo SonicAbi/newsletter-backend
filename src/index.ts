@@ -22,10 +22,10 @@ app.get("/subscriber", async (c) => {
 
 
 console.log(`Server is running on ${PORT}`)
-serve({
-  fetch: app.fetch,
-  port: PORT,
-})
+// serve({
+//   fetch: app.fetch,
+//   port: PORT,
+// })
 
 export default {
   fetch: app.fetch,
