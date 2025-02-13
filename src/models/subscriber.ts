@@ -25,7 +25,11 @@ export class Subscriber {
       text: `INSERT INTO subscriber VALUES ($1 = name, $2 = last_name, $3 = email, $4 = phone)`,
       values: [newSubscriber.name, newSubscriber.last_name, newSubscriber.email, newSubscriber.phone],
     };
-    const result = await getPool().query(query);
-    return result.rows;
+    try {
+      const result = await getPool().query(query);
+      return { message: "Subscriber added succesfully" };
+    } catch (error) {
+      console.error(`SQL Error: ${error}`);
+    }
   }
 }

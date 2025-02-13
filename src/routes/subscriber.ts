@@ -36,15 +36,11 @@ subscriberRouter.post("/add", async (c) => {
       email: email,
       phone: phone,
     };
-    console.log("neuer Subscriber added");
+    console.log("🦭 Neuer Subscriber:", newSubscriber);
     const subscribers = await Subscriber.addSubscriber(newSubscriber);
-    return c.json(
-      {
-        data: subscribers,
-      },
-      200
-    );
+    return c.json({ ...subscribers, data: newSubscriber }, 200);
   } catch (error) {
-    console.error();
+    console.error(`❌ Request error: ${error}`);
+    return c.json({ error: "Invalid Request" }, 400);
   }
 });
