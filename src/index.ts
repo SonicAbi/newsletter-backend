@@ -17,10 +17,12 @@ app.route("/newsletter", newsletterRouter);
 app.route("/subscriber", subscriberRouter);
 
 console.log(`Server is running on ${PORT}`);
-// serve({
-//   fetch: app.fetch,
-//   port: PORT,
-// });
+if (!process.versions.bun) {
+  serve({
+    fetch: app.fetch,
+    port: PORT,
+  });
+}
 
 export default {
   fetch: app.fetch,
