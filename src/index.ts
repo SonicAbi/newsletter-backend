@@ -1,8 +1,9 @@
 import { Hono } from "hono";
 import { getClient } from "./db/db";
 import { serve } from "bun";
+import { subscriber } from "./routes/subscriber";
 
-const PORT = 8080
+const PORT = 8080;
 const app = new Hono();
 const client = getClient();
 
@@ -10,12 +11,9 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
-app.get("/subscriber", async (c) => {
-  client.connect();
-  const allSubscriber = await client.query(`SELECT * FROM subscriber`);
-  client.end();
-  return c.json(allSubscriber.rows);
-});
+app.route("/subscriber", subscriber);
+app.route("/subscriber:id", subscriber);
+app.route("/subscriber/add", subscriber);
 
 app.get("/newsletter", async (c) => {
   client.connect();
@@ -24,13 +22,13 @@ app.get("/newsletter", async (c) => {
   return c.json(allNewsletter.rows);
 });
 
-console.log(`Server is running on ${PORT}`)
-serve({
-  fetch: app.fetch,
-  port: PORT,
-})
+console.log(`Server is running on ${PORT}`);
+// serve({
+//   fetch: app.fetch,
+//   port: PORT,
+// });
 
 export default {
   fetch: app.fetch,
-  port: PORT
+  port: PORT,
 };

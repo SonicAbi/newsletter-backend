@@ -1,4 +1,4 @@
-export type Subscriber = {
+export type SubscriberType = {
   id?: number | null;
   name: string;
   last_name: string;
