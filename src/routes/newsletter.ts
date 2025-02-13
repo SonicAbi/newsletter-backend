@@ -48,3 +48,7 @@ newsletterRouter.post("/add", async (c) => {
     return c.json({ error: "Invalid Request" }, 400);
   }
 });
+
+newsletterRouter.delete("/delete", (c) => {
+  return c.json({message: "Nille"})
+})
