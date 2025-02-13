@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import { getClient } from "./db/db";
+import { serve } from "bun";
 
+const PORT = 8080
 const app = new Hono();
 const client = getClient();
 
@@ -22,4 +24,13 @@ app.get("/newsletter", async (c) => {
   return c.json(allNewsletter.rows);
 });
 
-export default app;
+console.log(`Server is running on ${PORT}`)
+serve({
+  fetch: app.fetch,
+  port: PORT,
+})
+
+export default {
+  fetch: app.fetch,
+  port: PORT
+};

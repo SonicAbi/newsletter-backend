@@ -20,6 +20,11 @@ export function getPool() {
   if (pool) {
     return pool;
   }
-  pool = new Pool();
+  pool = new Pool({
+    port: parseInt(process.env.PGPORT || "5432", 10),
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
   return pool;
 }
